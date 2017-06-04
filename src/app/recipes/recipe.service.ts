@@ -7,8 +7,6 @@ import { Recipe } from './recipe.model';
 @Injectable()
 export class RecipeService {
 
-    recipeSelected = new EventEmitter<Recipe>();
-
     private recipes: Recipe[] = [
         new Recipe('Paté gaumais', 'Paté gaumais - description',
             'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/P%C3%A2t%C3%A9_gaumois_familial.jpg/280px-P%C3%A2t%C3%A9_gaumois_familial.jpg',
