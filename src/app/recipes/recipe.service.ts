@@ -20,8 +20,7 @@ export class RecipeService {
             [new Ingredient('ingredient 3', 7)])
     ];
 
-    constructor(private slService: ShoppingListService) {
-    }
+    constructor(private slService: ShoppingListService) {}
 
 
     getRecipes() {
@@ -39,16 +38,25 @@ export class RecipeService {
 
     addRecipe(recipe: Recipe) {
         this.recipes.push(recipe);
-        this.recipesChanged.next(this.recipes.slice());
+        this.notifyUpdate();
     }
 
     updateRecipe(index: number, newRecipe: Recipe) {
         this.recipes[index] = newRecipe;
-        this.recipesChanged.next(this.recipes.slice());
+        this.notifyUpdate();
     }
 
     deleteRecipe(index: number) {
         this.recipes.splice(index, 1);
+        this.notifyUpdate();
+    }
+
+    setRecipes(recipes: Recipe[]) {
+        this.recipes = recipes.slice();
+        this.notifyUpdate();
+    }
+
+    private notifyUpdate() {
         this.recipesChanged.next(this.recipes.slice());
     }
 }
