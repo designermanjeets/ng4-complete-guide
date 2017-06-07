@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth-service';
 import { Recipe } from './../recipes/recipe.model';
 import { RecipeService } from './../recipes/recipe.service';
 import { Http, Response } from '@angular/http';
@@ -10,20 +11,25 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class DataStorageService {
-    constructor(private http: Http, private recipeService: RecipeService) { }
+    constructor(private http: Http, 
+                private recipeService: RecipeService,
+                private authService: AuthService) { }
 
     storeRecipes() {
-        return this.http.put(recipesUrl, this.recipeService.getRecipes());
+        const token = this.authService.getToken();
+        return this.http.put(recipesUrl + '?auth=' + token, this.recipeService.getRecipes());
     }
 
     loadRecipes() {
-        this.http.get(recipesUrl)
+        const token = this.authService.getToken();
+
+        this.http.get(recipesUrl + '?auth=' + token)
             .map(
             (response: Response) => {
                 const recipes: Recipe[] = response.json();
                 for (const recipe of recipes) {
+                    // empty array could not be set by backend service, force creation
                     if (!recipe['ingredients']) {
-                        console.log(recipe);
                         recipe['ingredients'] = [];
                     }
                 }

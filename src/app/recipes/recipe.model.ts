@@ -11,5 +11,5 @@ export class Recipe {
         this.description = description;
         this.imagePath = imagePath;
         this.ingredients = ingredients;
-    } 
+    }
 }
