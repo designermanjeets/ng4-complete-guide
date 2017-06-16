@@ -27,4 +27,8 @@ export class HeaderComponent {
         this.authService.logout();
         this.router.navigate(['/']);
     }
+
+    isAuthenticated() {
+        return this.authService.isAuthenticated();
+    }
 }
