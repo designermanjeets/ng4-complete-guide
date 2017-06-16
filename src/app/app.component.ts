@@ -1,3 +1,4 @@
+import { DataStorageService } from './shared/data-storage.service';
 import { Secrets } from './secret';
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
@@ -10,6 +11,8 @@ import * as firebase from 'firebase';
 export class AppComponent implements OnInit {
 
   loadedFeature = 'recipe';
+
+  constructor(private dsService: DataStorageService) {}
 
   onNavigate(feature: string) {
     this.loadedFeature = feature;

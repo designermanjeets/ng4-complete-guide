@@ -1,7 +1,8 @@
+import { DataStorageService } from './../shared/data-storage.service';
 import { Subject } from 'rxjs/Subject';
 import { ShoppingListService } from './../shopping-list/shopping-list.service';
 import { Ingredient } from './../shared/ingredient.model';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 
 import { Recipe } from './recipe.model';
 
@@ -10,18 +11,9 @@ export class RecipeService {
 
     recipesChanged = new Subject<Recipe[]>();
 
-    private recipes: Recipe[] = [
-        new Recipe('Paté gaumais', 'Paté gaumais - description',
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/P%C3%A2t%C3%A9_gaumois_familial.jpg/280px-P%C3%A2t%C3%A9_gaumois_familial.jpg',
-            [new Ingredient('ingredient 1', 5),
-            new Ingredient('ingredient 2', 42)]),
-        new Recipe('Touffaye', 'Touffaye - description',
-            'https://ds1.static.rtbf.be/article/image/624x351/7/9/3/9dc372713683fd865d366d5d9ee810ba-1397820935.jpg',
-            [new Ingredient('ingredient 3', 7)])
-    ];
+    private recipes: Recipe[] = [];
 
-    constructor(private slService: ShoppingListService) {}
-
+    constructor(private slService: ShoppingListService) { }
 
     getRecipes() {
         // defensive copy

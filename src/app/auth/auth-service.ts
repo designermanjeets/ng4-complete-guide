@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
@@ -5,6 +6,7 @@ import * as firebase from 'firebase';
 @Injectable()
 export class AuthService {
     token: String;
+    tokenChanged = new Subject<String>();
 
     constructor(private router: Router) { }
 
@@ -20,7 +22,11 @@ export class AuthService {
                 this.router.navigate(['/']);
                 firebase.auth().currentUser.getToken().
                     then(
-                    (token: string) => this.token = token
+                    (token: string) => {
+                        console.log('Authentication OK, new token : ' + token);
+                        this.token = token;
+                        this.tokenChanged.next(token);
+                    }
                     );
             }
         )

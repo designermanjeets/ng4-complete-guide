@@ -1,13 +1,28 @@
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { ShoppingListService } from './shopping-list.service';
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  styleUrls: ['./shopping-list.component.css'],
+  animations: [
+    trigger('flyInOut', [
+      transition('void => *', [
+        style({ transform: 'translateX(-50%)'}),
+        animate(500)
+      ]),
+      transition('* => void', [
+        animate(500, style({
+          transform: 'translateX(50%)',
+          backgroundColor: 'red'
+        }))
+      ])
+    ])
+  ]
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
